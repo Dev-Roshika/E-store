@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('admin.adminDashboard');
+    return view('login');
 });
 Route::resource('/product', ProductsController::class);
 
@@ -25,3 +25,4 @@ Route::resource('/product', ProductsController::class);
 // Route::get('/createProduct', function () {
 //     return view('admin.createProduct');
 // });
+Route::get('/register', function () {return view('register');});
