@@ -32,7 +32,7 @@ class AuthController extends Controller
                 provided in the request, and the second one is the 
                 hashed password retrieved from the database.*/
                 Auth::login($user);
-                return redirect() -> route('/admin/adminDashboard');
+                return redirect()->route('admin.adminDashboard');
             } else {
                 return redirect()->back()->withErrors(['email' => 'Password is invalid']);
             }
