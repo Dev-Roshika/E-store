@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('gender');
             // $table->timestamp('email_verified_at')->nullable();
             $table->string('address');
+            $table->string('mobile')->nullable(); // adding mobile field
             $table->string('password');
             $table->string('role');
             $table->rememberToken();

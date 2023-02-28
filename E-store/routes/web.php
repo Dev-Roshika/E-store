@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProductsController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EmployeeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,12 +19,19 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('login');
 });
-Route::resource('/product', ProductsController::class);
 
-// Route::get('/productManagement', function () {
-//     return view('admin.productManagement');
-// });
-// Route::get('/createProduct', function () {
-//     return view('admin.createProduct');
-// });
-Route::get('/register', function () {return view('register');});
+Route::get('/login', function () {
+    return view('login');
+});
+
+Route::resource('/product', ProductsController::class);
+Route::resource('/admin/employee', EmployeeController::class);
+Route::get(
+    '/admin/adminDashboard',
+    function () {
+        return view('/admin/adminDashboard');
+    }
+);
+
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
