@@ -9,8 +9,9 @@
 </head>
 
 <body>
-    <h1>Cusotomer Registration</h1>
-    <form action="" method="post">
+    <h1>Customer Registration</h1>
+    <form action="{{route('register')}}" method="post">
+        {{ csrf_field() }}
         <label for="name">Name: </label>
         <input type="text" name="name" id="name">
         <label for="email">Email: </label>
@@ -26,6 +27,7 @@
         <input type="tel" name="mobile" id="mobile">
         <label for="pass">Password: </label>
         <input type="password" name="password" id="pass">
+        <input type="hidden" name="role" id="role" value="customer">
         <input type="submit" value="Sign Up">
     </form>
 </body>

@@ -18,6 +18,11 @@ class ProductsController extends Controller
         return view('admin.productManagement')->with('products', $products);
     }
 
+    public function getProduct()
+    {
+        $products = Products::all();
+        return view('customer.orders')->with('products', $products);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -38,7 +43,7 @@ class ProductsController extends Controller
     {
         $input = $request->all();
         Products::create($input);
-        return redirect('product')->with('flash_message', 'Product Added!');//
+        return redirect('product')->with('flash_message', 'Product Added!'); //
     }
 
     public function show($id)

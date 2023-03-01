@@ -76,4 +76,7 @@
         </div>
     </div>
 </div>
+<div class="container">
+    <button onclick="window.location.href='/customer/register';">Register</button>
+</div>
 @endsection

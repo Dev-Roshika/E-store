@@ -14,32 +14,44 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required',
+
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required'
         ]);
 
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-        //$credentials = $request->only('email', 'password');
-        $user = User::where('email', $request->email)->first();
+        $credentials = $request->only('email', 'password');
 
-        if ($user) {
-            if (Hash::check($request->password, $user->password)) {
-                /*The Hash::check() function takes two arguments: 
-                the first one is the plain-text password 
-                provided in the request, and the second one is the 
-                hashed password retrieved from the database.*/
-                Auth::login($user);
-                return redirect()->route('admin.adminDashboard');
-            } else {
-                return redirect()->back()->withErrors(['email' => 'Password is invalid']);
+        if (Auth::attempt($credentials)) {
+            $role = Auth::user()->role;
+
+            session()->put('isLogged', true);
+            session()->put('role', $role);
+            session()->put('name', session()->has('name') ? session()->get('name') : Auth::user()->name);
+
+
+            switch ($role) {
+                case 'admin':
+                    return redirect()->route('admin.adminDashboard');
+                    break;
+                case 'customer':
+                    return redirect()->route('customer.customerDashboard');
+                    break;
+                case 'employee':
+                    return redirect()->route('employee.employeeDashboard');
+                default:
+                    return redirect()->route('login');
+                    break;
             }
         } else {
-            return redirect()->back()->withErrors(['email' => 'Email is not registerd']);
+            session()->put('isLogged', false);
+            session()->put('loginError', 'Invalid email or password');
+
+            error_log('here');
+            return redirect()->route('login');
         }
     }
+
 
     function logout()
     {
